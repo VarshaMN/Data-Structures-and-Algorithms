@@ -8,29 +8,21 @@ class Solution {
         }
         for(int i=0;i<colour.length;i++){
             if(colour[i]==-1){
-                if(check(graph,i,colour)==false) return false;
+                if(dfs(graph,i,colour,0)==false) return false;
             }
         }
         return true;
     }
-    private boolean check(int[][] graph,int start,int[] colour){
-        Queue<Integer> q=new LinkedList<>();
 
-        colour[start]=0;
-        q.add(start);
-        while(!q.isEmpty()){
-            int curr=q.remove();
-            for(int it:graph[curr]){
-                if(colour[it]==-1){
-                    colour[it]=1-colour[curr];
-                    q.add(it);
-                }else if(colour[it]==colour[curr]){
-                    return false;
-                }
+    private boolean dfs(int[][] graph,int start,int[] colour,int col){
+        colour[start]=col;
+        for(Integer it:graph[start]){
+            if(colour[it]==-1){
+              if(dfs(graph,it,colour,1-col)==false) return false;
+            }else if(colour[it]==col){
+                return false;
             }
-
         }
         return true;
-
     }
 }
