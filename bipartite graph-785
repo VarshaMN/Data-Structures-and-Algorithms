@@ -1,0 +1,36 @@
+class Solution {
+    public boolean isBipartite(int[][] graph) {
+        int n=graph.length;
+
+        int[] colour=new int[graph.length];
+        for(int i=0;i<colour.length;i++){
+            colour[i]=-1;
+        }
+        for(int i=0;i<colour.length;i++){
+            if(colour[i]==-1){
+                if(check(graph,i,colour)==false) return false;
+            }
+        }
+        return true;
+    }
+    private boolean check(int[][] graph,int start,int[] colour){
+        Queue<Integer> q=new LinkedList<>();
+
+        colour[start]=0;
+        q.add(start);
+        while(!q.isEmpty()){
+            int curr=q.remove();
+            for(int it:graph[curr]){
+                if(colour[it]==-1){
+                    colour[it]=1-colour[curr];
+                    q.add(it);
+                }else if(colour[it]==colour[curr]){
+                    return false;
+                }
+            }
+
+        }
+        return true;
+
+    }
+}
