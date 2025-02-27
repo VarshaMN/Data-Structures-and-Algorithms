@@ -1,0 +1,48 @@
+
+class Solution {
+    // Function to detect cycle in a directed graph.
+    public boolean isCyclic(ArrayList<ArrayList<Integer>> adj) {
+        // code here
+        
+         ArrayList<Integer> ans = new ArrayList<>();
+        Queue<Integer> q = new LinkedList<>();
+        int v = adj.size();
+        int[] indeg = new int[v];
+
+        // Compute in-degree of each node
+        for (int i = 0; i < v; i++) {
+            for (Integer it : adj.get(i)) {
+                indeg[it]++; // Fix: Increment indeg of 'it' instead of 'i'
+            }
+        }
+
+        // Add all vertices with 0 in-degree to the queue
+        for (int i = 0; i < v; i++) {
+            if (indeg[i] == 0) {
+                q.add(i);
+            }
+        }
+
+        // Process nodes in BFS manner
+        int count=0;
+        while (!q.isEmpty()) {
+             count++;
+            int curr = q.remove();
+            ans.add(curr);
+
+            for (Integer it : adj.get(curr)) {
+                indeg[it]--;
+               
+                if (indeg[it] == 0)
+                    q.add(it);
+            }
+        }
+        
+        if(count==adj.size()) return false;
+
+        return true;
+        
+    }
+    
+    
+}
