@@ -1,0 +1,25 @@
+ArrayList<Integer> dijkstra(ArrayList<ArrayList<iPair>> adj, int src) {
+        // Write your code here
+        
+        int n=adj.size();
+        ArrayList<Integer> distance=new ArrayList<>(Collections.nCopies(n,Integer.MAX_VALUE));
+        PriorityQueue<iPair> pq=new PriorityQueue<>((a,b)->a.second-b.second);
+        pq.offer(new iPair(src,0));
+        distance.set(src,0);
+        
+        while(!pq.isEmpty()){
+            iPair p=pq.poll();
+            int u=p.first;
+            for(iPair neighbour:adj.get(u)){
+                int v=neighbour.first;
+                int wt=neighbour.second;
+                
+                if(distance.get(u)+wt<distance.get(v)){
+                    distance.set(v,distance.get(u)+wt);
+                    pq.offer(new iPair(v,distance.get(v)));
+                }
+            }
+        }
+        return distance;
+        
+    }
