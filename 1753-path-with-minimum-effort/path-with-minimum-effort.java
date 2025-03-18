@@ -1,0 +1,59 @@
+class Tuple{
+    int distance;
+    int row;
+    int col;
+    public Tuple(int distance,int row,int col){
+        this.distance=distance;
+        this.row=row;
+        this.col=col;
+    }
+}
+
+
+class Solution {
+    public int minimumEffortPath(int[][] heights) {
+        int ans=0;
+        int n=heights.length;
+        int m=heights[0].length;
+
+        PriorityQueue<Tuple> pq=new PriorityQueue<>((x,y)->x.distance-y.distance);
+
+        int[][] dis=new int[n][m];
+
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                dis[i][j]=(int)(1e9);
+            }
+        }
+        dis[0][0]=0;
+        int[] rowarr={-1,0,1,0};
+        int[] colarr={0,1,0,-1};
+
+        pq.add(new Tuple(0,0,0));
+        while(!pq.isEmpty()){
+            Tuple it=pq.peek();
+            pq.remove();
+            int diff=it.distance;
+            int row=it.row;
+            int col=it.col;
+
+            if(row==n-1 && col==m-1) return diff;
+            for(int i=0;i<4;i++){
+             int nrow=row+rowarr[i];
+             int ncol=col+colarr[i];
+
+             if(nrow>=0 && ncol>=0 && ncol<m && nrow<n){
+                int neweff=Math.max(Math.abs(heights[row][col]-heights[nrow][ncol]),diff);
+                if(neweff<dis[nrow][ncol]){
+                  dis[nrow][ncol]=neweff;
+                  pq.add(new Tuple(neweff,nrow,ncol));
+                }
+             }
+            }
+        }
+            
+
+return 0;
+
+    }
+}
