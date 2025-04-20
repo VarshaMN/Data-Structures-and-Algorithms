@@ -30,4 +30,29 @@ class Solution {
         return dp[i][j]=arr[i][j]+Math.min(left,up);
     }
 
+    int bottomUp(int m,int n,int[][] arr){
+      int[][] dp=new int[m][n];
+      for(int i=0;i<i;i++){
+        for(int j=0;j<j;j++){
+            if(i==0 && j==0){
+                dp[i][j]=arr[i][j];
+            }else{
+                int up=arr[i][j];
+                if(i>0) up=dp[i-1][j]+up;
+                else return (int)1e9;
+                int left=arr[i][j];
+                if(j>0) left=dp[i][j-1]+left;
+                else return (int)1e9;
+
+                dp[i][j]=Math.min(up,left);
+
+
+            }
+        }
+      }
+      return dp[m][n];
+      
+
+    }
+
 }
