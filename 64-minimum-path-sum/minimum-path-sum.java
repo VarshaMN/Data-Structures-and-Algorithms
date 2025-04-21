@@ -3,13 +3,8 @@ class Solution {
         int m=grid.length;
         int n=grid[0].length;
         int[][] dp=new int[m][n];
-        for(int i=0;i<m;i++){
-            for(int j=0;j<n;j++){
-                dp[i][j]=-1;
-            }
-
-        }
-        return topDown(m-1,n-1,grid,dp);
+       
+        return bottomUp(m,n,grid);
     }
     int rec(int i,int j,int[][] arr){
         if(i<0 || j<0) return Integer.MAX_VALUE;
@@ -30,28 +25,24 @@ class Solution {
         return dp[i][j]=arr[i][j]+Math.min(left,up);
     }
 
-    int bottomUp(int m,int n,int[][] arr){
-      int[][] dp=new int[m][n];
-      for(int i=0;i<i;i++){
-        for(int j=0;j<j;j++){
-            if(i==0 && j==0){
-                dp[i][j]=arr[i][j];
-            }else{
-                int up=arr[i][j];
-                if(i>0) up=dp[i-1][j]+up;
-                else return (int)1e9;
-                int left=arr[i][j];
-                if(j>0) left=dp[i][j-1]+left;
-                else return (int)1e9;
+    int bottomUp(int m,int n,int[][] grid){
+   
 
-                dp[i][j]=Math.min(up,left);
+    int[][] dp = new int[m][n];
 
-
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            if (i == 0 && j == 0)
+                dp[i][j] = grid[i][j];
+            else {
+                int up = (i > 0) ? dp[i - 1][j] : Integer.MAX_VALUE;
+                int left = (j > 0) ? dp[i][j - 1] : Integer.MAX_VALUE;
+                dp[i][j] = grid[i][j] + Math.min(up, left);
             }
         }
-      }
-      return dp[m][n];
-      
+    }
+
+    return dp[m - 1][n - 1];
 
     }
 
