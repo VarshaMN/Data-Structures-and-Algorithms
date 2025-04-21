@@ -7,7 +7,7 @@ class Solution {
             for(int j=0;j<i+1;j++)
                 dp[i][j]=-1;
         }
-        return bottomUp(n,triangle,dp);
+        return bottomUp(n,triangle);
     }
     int rec(int n,List<List<Integer>> arr,int i,int j){
         if(i==n-1){
@@ -34,17 +34,22 @@ class Solution {
 
     }
 
-    int bottomUp(int n,List<List<Integer>> arr,int[][] dp){
-        for(int j=n-1;j>=0;j--) dp[n-1][j]=arr.get(n-1).get(j);
+    int bottomUp(int n,List<List<Integer>> arr){
+        int[] front=new int[n];
+        
+        for(int j=n-1;j>=0;j--) front[j]=arr.get(n-1).get(j);
         for(int i=n-2;i>=0;i--){
+            int[] cur=new int[n];
             for(int j=i;j>=0;j--){
-                 int down=arr.get(i).get(j)+dp[i+1][j];
-                 int adj=arr.get(i).get(j)+dp[i+1][j+1];
-                 dp[i][j]=Math.min(down,adj);
+                 int down=arr.get(i).get(j)+front[j];
+                 int adj=arr.get(i).get(j)+front[j+1];
+                cur[j]=Math.min(down,adj);
             }
+            front=cur;
+
         }
         
-       return dp[0][0];
+       return front[0];
 
     }
 }
