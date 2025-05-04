@@ -1,0 +1,42 @@
+class Solution {
+    public boolean canPartition(int[] nums) {
+        int n=nums.length;
+
+        
+       
+        int sum=0;
+        for(int i=0;i<n;i++){
+          sum=sum+nums[i];
+        }
+        if(sum%2==1)
+          return false;
+        return bottomUp(nums,sum/2,n-1);
+    }
+
+    boolean bottomUp(int[] arr,int sum,int index){
+    int n = arr.length;
+    boolean[][] dp = new boolean[index + 1][sum + 1];
+
+    // Initialize
+    for (int i = 0; i <= index; i++) {
+        dp[i][0] = true;
+    }
+    if (arr[0] <= sum) {
+        dp[0][arr[0]] = true;
+    }
+
+    for (int i = 1; i <= index; i++) {
+        for (int j = 1; j <= sum; j++) {
+            boolean exclude = dp[i - 1][j];
+            boolean include = false;
+            if (j >= arr[i]) {
+                include = dp[i - 1][j - arr[i]];
+            }
+            dp[i][j] = include || exclude;
+        }
+    }
+
+    return dp[index][sum];
+      
+  }
+}
