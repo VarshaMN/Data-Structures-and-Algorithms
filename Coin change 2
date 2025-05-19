@@ -1,0 +1,23 @@
+class Solution {
+    public int change(int amount, int[] coins) {
+        return rec(amount,coins,coins.length-1);
+    }
+    int rec(int amount,int[] arr,int i){
+        if(amount==0){
+            return 1;
+        }
+      
+        if(i==0){
+        if(amount%arr[0]==0) return 1;
+        else return 0;
+        }
+        int exclude=rec(amount,arr,i-1);
+        
+        int include=0;
+        if(amount>=arr[i])
+        include=rec(amount-arr[i],arr,i);
+        return include+exclude;
+       
+
+
+    }
