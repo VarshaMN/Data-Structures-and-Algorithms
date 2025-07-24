@@ -1,0 +1,22 @@
+class Solution {
+    // Function to get the count of elements between num1 and num2 in array arr.
+    public int getCount(ArrayList<Integer> arr, int num1, int num2) {
+        // Your Code goes here.
+        int leftindex=-1,rightindex=-1;
+        
+        for(int i=0;i<arr.size();i++){
+            if(arr.get(i)==num1 && leftindex==-1){
+                leftindex=i;
+            }
+            if(arr.get(i)==num2){
+                rightindex=i;
+            }
+            
+           
+        }
+        if(leftindex==-1 || rightindex==-1 || leftindex>=rightindex) {
+                return 0;
+            }
+         return rightindex-leftindex-1;
+    }
+}
